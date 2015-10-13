@@ -55,7 +55,7 @@ angular.module('bw.progress',[])
       scope: {
         member: '='
       },
-	  template: "<li style=\"border-top:1px solid black;vertical-align:top;\">{{member.name}}<bw-progress data1={{member.data}}></bw-progress></li>",
+	  template: "<li style=\"border-top:1px solid black;vertical-align:top;\">{{member.name}}<bw-progress data='member.data'></bw-progress></li>",
       link: function (scope, element) {
 		if (angular.isArray(scope.member.children)) {
 			$compile('<collection collection="member.children"></collection>')(scope, function(cloned, scope){
@@ -76,10 +76,8 @@ angular.module('bw.progress',[])
       link: function (scope, element) {
 
         //Render graph based on 'element'
-        scope.render = function(element) {
-//return;
-		var data1 = element[0].getAttribute("data1");
-		data = JSON.parse(data1);
+        scope.render = function(data) {
+
 		// The directive should take two float inputs, expected and actual, between 0.0 and 1.0.
 		if (data.expected < 0 || data.expected > 1) return;
 		if (data.actual < 0 || data.actual > 1) return;
@@ -93,7 +91,8 @@ angular.module('bw.progress',[])
 		var svgW = 150, svgH = 150;
 		var radius = 45, innerPadding = 5, outerPadding = 2, innerThickness = 2, outerThickness = 6;
 		var transitionMS = 1000;
-		
+
+		d3.select(element[0]).select("svg").remove();
 		var svg = d3.select(element[0])
 					.append("svg")
 					.attr("width",svgW)
@@ -157,8 +156,8 @@ angular.module('bw.progress',[])
 
          //Watch 'data' and run scope.render(newVal) whenever it changes
          //Use true for 'objectEquality' property so comparisons are done on equality and not reference
-          scope.$watch('element', function(){
-              scope.render(element);
+          scope.$watch('data', function(){
+              scope.render(scope.data);
           }, true);  
         }
     };

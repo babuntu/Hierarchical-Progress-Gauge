@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <meta charset="UTF-8">
+		<title>BetterWorks Progress Indicator</title>
+		<style>
+			.arc {
+				stroke-linecap:round;
+			}
+		</style>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+		<script src="bwProgress.js"></script>
+	</head>
+	<body ng-app="bw.progress">
+		<div ng-controller="bw.Controller">
+			<collection collection='progressData'></collection>
+		</div>
+	</body>
+</html>
